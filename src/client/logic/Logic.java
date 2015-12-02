@@ -85,6 +85,8 @@ public class Logic {
 							snakeScreen.getLogin().clearFields();
 							games = sdkLogic.openGames();
 							snakeScreen.getNewGame().setAvailableGamesTbl(games);
+							snakeScreen.getNewGame().getMoveBtn().setVisible(false);
+							snakeScreen.getNewGame().getJoinGameRdbtn().setSelected(true);
 							snakeScreen.show(snakeScreen.Menu);
 						} else
 							JOptionPane.showMessageDialog(snakeScreen, "An error has occurred, please retype" +
@@ -150,18 +152,20 @@ public class Logic {
 				//tm.setGames(games);
 				//snakeScreen.getNewGame().getAvailableGamesTbl().setModel(tm);
 
-
-
-
-
-			}else if(e.getSource() == snakeScreen.getNewGame().getShowLogRdbtn()){
-				snakeScreen.getNewGame().getHideLogRdbtn().setSelected(false);
-				snakeScreen.getNewGame().getShowLogRdbtn().setSelected(true);
-				snakeScreen.getNewGame().getLogArea().setVisible(true);
-			} else if(e.getSource() == snakeScreen.getNewGame().getHideLogRdbtn()){
-				snakeScreen.getNewGame().getShowLogRdbtn().setSelected(true);
-				snakeScreen.getNewGame().getHideLogRdbtn().setSelected(false);
-				snakeScreen.getNewGame().getLogArea().setVisible(false);
+			}else if(e.getSource() == snakeScreen.getNewGame().getCreateGameRdbtn()){
+				snakeScreen.getNewGame().getJoinGameRdbtn().setSelected(false);
+				snakeScreen.getNewGame().getCreateGameRdbtn().setSelected(true);
+				snakeScreen.getNewGame().getMoveBtn().setVisible(true);
+				snakeScreen.getNewGame().getScrollPane().setVisible(false);
+			}else if(e.getSource() == snakeScreen.getNewGame().getJoinGameRdbtn()){
+				snakeScreen.getNewGame().getCreateGameRdbtn().setSelected(false);
+				snakeScreen.getNewGame().getJoinGameRdbtn().setSelected(true);
+				snakeScreen.getNewGame().getMoveBtn().setVisible(false);
+				snakeScreen.getNewGame().getScrollPane().setVisible(true);
+			}else if(e.getSource() == snakeScreen.getNewGame().getRunGameBtn()){
+				/*
+				*HUSK AT TJEKKE OM HOST OG OPPONENT ER SAMME PERSON.
+				*/
 			}else if(e.getSource() == snakeScreen.getNewGame().getMenuBtn()){
 				snakeScreen.show(snakeScreen.Menu);
 			}else if(e.getSource() == snakeScreen.getNewGame().getLogOutBtn()){
