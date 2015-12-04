@@ -20,16 +20,16 @@ public class NewGame extends JPanel {
 	private JLabel availableGamesLbl;
 	private JLabel nextMovesLbl;
 	private JButton moveBtn;
-	private JTextArea logArea;
-	private JButton logBtn;
+	private JComboBox usersGames;
 	private JButton runGameBtn;
 	private JLabel loggedInAsLbl;
 	private JButton logOutBtn;
 	private JButton menuBtn;
-	private JRadioButton showLogRdbtn;
-	private JRadioButton hideLogRdbtn;
+	private JRadioButton createGameRdbtn;
+	private JRadioButton joinGameRdbtn;
 	private JScrollPane scrollPane;
 	private TableModelOpenGames model;
+	private JButton deleteGameBtn;
 
 
 	/**
@@ -81,18 +81,17 @@ public class NewGame extends JPanel {
 		moveBtn.setBounds(291, 145, 89, 23);
 		add(moveBtn);
 		
-		logArea = new JTextArea();
-		logArea.setEditable(false);
-		logArea.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
-		logArea.setBounds(179, 145, 94, 53);
-		logArea.setVisible(false);
-		add(logArea);
-		/*
-		logBtn = new JButton("Log");
-		logBtn.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
-		logBtn.setBounds(179, 209, 89, 23);
-		add(logBtn);
-		*/
+		usersGames = new JComboBox();
+		usersGames.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
+		usersGames.setBounds(179, 145, 94, 23);
+		usersGames.setVisible(true);
+		add(usersGames);
+
+		deleteGameBtn = new JButton("Delete");
+		deleteGameBtn.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
+		deleteGameBtn.setBounds(179, 178, 89, 23);
+		add(deleteGameBtn);
+
 		runGameBtn = new JButton("Run Game");
 		runGameBtn.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
 		runGameBtn.setBounds(278, 209, 105, 23);
@@ -120,15 +119,15 @@ public class NewGame extends JPanel {
 		menuBtn.setBounds(351, 69, 89, 23);
 		add(menuBtn);
 
-		showLogRdbtn = new JRadioButton("Show Log");
-		showLogRdbtn.setBounds(183, 205, 89, 23);
-		showLogRdbtn.setSelected(false);
-		add(showLogRdbtn);
+		createGameRdbtn = new JRadioButton("Create Game");
+		createGameRdbtn.setBounds(173, 205, 99, 23);
+		//createGameRdbtn.setSelected(false);
+		add(createGameRdbtn);
 
-		hideLogRdbtn = new JRadioButton("Hide Log");
-		hideLogRdbtn.setBounds(183, 231, 89, 23);
-		hideLogRdbtn.getModel().setSelected(true);
-		add(hideLogRdbtn);
+		joinGameRdbtn = new JRadioButton("Join Game");
+		joinGameRdbtn.setBounds(173, 231, 99, 23);
+		//joinGameRdbtn.setSelected(true);
+		add(joinGameRdbtn);
 
 	}
 
@@ -139,18 +138,15 @@ public class NewGame extends JPanel {
 		runGameBtn.addActionListener(n);
 		logOutBtn.addActionListener(n);
 		menuBtn.addActionListener(n);
-		showLogRdbtn.addActionListener(n);
-		hideLogRdbtn.addActionListener(n);
+		createGameRdbtn.addActionListener(n);
+		joinGameRdbtn.addActionListener(n);
+		deleteGameBtn.addActionListener(n);
 	}
 
 	// setters and getters to some of the components
 
 	public JButton getMoveBtn(){
 		return moveBtn;
-	}
-	
-	public JButton getLogBtn(){
-		return logBtn;
 	}
 	
 	public JButton getRunGameBtn(){
@@ -168,20 +164,35 @@ public class NewGame extends JPanel {
 	public String getMoveField(){
 		return moveField.getText();
 	}
-	
-	public void setLogArea(String log){
-		log = moveField.getText();
-		logArea.setText(log);
+
+	public JButton getDeleteGameBtn(){
+		return deleteGameBtn;
 	}
-	public JTextArea getLogArea(){
-		return logArea;
+	
+	public JComboBox getUsersGames(){
+		return usersGames;
 	}
 
-	public JRadioButton getShowLogRdbtn(){
-		return showLogRdbtn;
+	public void setGamesInUsersGames(ArrayList<Game> games){
+		usersGames.removeAllItems();
+		for(Game game: games){
+			usersGames.addItem(game.getName());
+		}
 	}
-	public JRadioButton getHideLogRdbtn(){
-		return hideLogRdbtn;
+
+	public String getSelectedGame(){
+		return (String) usersGames.getSelectedItem();
+	}
+
+	public void removeGame(){
+		usersGames.removeItemAt(usersGames.getSelectedIndex());
+	}
+
+	public JRadioButton getCreateGameRdbtn(){
+		return createGameRdbtn;
+	}
+	public JRadioButton getJoinGameRdbtn(){
+		return joinGameRdbtn;
 	}
 
 	public void setUserField(String user){
@@ -196,6 +207,10 @@ public class NewGame extends JPanel {
 	public void setAvailableGamesTbl(ArrayList<Game> games){
 		model = new TableModelOpenGames(games);
 		availableGamesTbl.setModel(model);
+	}
+
+	public JScrollPane getScrollPane(){
+		return scrollPane;
 	}
 
 	public void setMoveField(String text){

@@ -14,7 +14,7 @@ public class About extends JPanel {
 	private JLabel snakeLbl;
 	private JButton logOutBtn;
 	private JButton menuBtn;
-	private JTextArea infoArea;
+	private JLabel infoLabel;
 	private JButton moreInfoBtn; 
 	
 	/**
@@ -55,10 +55,9 @@ public class About extends JPanel {
 		menuBtn.setBounds(351, 69, 89, 23);
 		add(menuBtn);
 		
-		infoArea = new JTextArea();
-		infoArea.setEditable(false);
-		infoArea.setBounds(30, 117, 222, 145);
-		add(infoArea);
+		infoLabel = new JLabel("");
+		infoLabel.setBounds(30, 117, 222, 145);
+		add(infoLabel);
 		
 		moreInfoBtn = new JButton("More Info");
 		moreInfoBtn.setFont(new Font("Gill Sans MT", Font.BOLD, 14));

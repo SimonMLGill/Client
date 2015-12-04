@@ -5,7 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,9 +16,6 @@ import java.util.HashMap;
 public class SdkLogic {
 
     ServerConnection serverConnection = new ServerConnection();
-
-
-
 
     // login method using a user-object and returns a message of whether or not the said users login is successful.
 
@@ -39,7 +36,7 @@ public class SdkLogic {
         if (jsonObject != null) {
 
             if (jsonObject.get("userid") != null)
-                user.setUserId((int)(long) jsonObject.get("userid"));
+                user.setId((int)(long) jsonObject.get("userid"));
 
             return(String) jsonObject.get("message");
         }
@@ -49,85 +46,78 @@ public class SdkLogic {
 
     // tablemodel-method which returns the highscores of the games
 
-    public ArrayList<User> getHighscores(){
+    public ArrayList<Score> getHighscores(){
 
-        /*ArrayList<String> list = new ArrayList<String>();
-        JSONArray jarray = new JSONArray();
-        try {
-            if (jarray != null) {
-                int length = jarray.length();
-                for (int i = 0; i < length; i++) {
-                    list.add(jarray.get(i).toString());
-                }
-            }
-        } catch(JSONException e){
-            e.printStackTrace();
-        }*/
-
-        String data = serverConnection.get("api/scores/");
-        return new Gson().fromJson(data, new TypeToken<ArrayList<User>>(){}. getType());
+        String data = serverConnection.get("highscores/");
+        return new Gson().fromJson(data, new TypeToken<ArrayList<Score>>(){}. getType());
     }
 
     // tablemodel-method which returns the available/open games
 
     public ArrayList<Game> openGames() {
 
-         /*DefaultTableModel dm = new DefaultTableModel(){
-            @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };*/
-
         String data = serverConnection.get("games/open/");
 
-        //JSON.stringify(data);
 
         return new Gson().fromJson(data, new TypeToken<ArrayList<Game>>(){}.getType());
     }
 
+    public ArrayList<User> getUsers(){
+        String data = serverConnection.get("users/");
+
+        return new Gson().fromJson(data, new TypeToken<ArrayList<User>>(){}.getType());
+    }
+
     // method that gets a user via a userid
 
-    public static void getUser(int userId){
-        ServerConnection sc = new ServerConnection();
+    /*public User getUser(User user){
 
-        User user = new User();
-        user.setUserId(userId);
-
-    }
-    public static void getGame(int gameId){
-
+        User usr = new User();
+        usr.setUserId(user.getUserId());
+        String data = serverConnection.get("users/" + usr.getUserId());
+        return new Gson().fromJson(data, User.class);
+    }*/
+    public ArrayList<Game> getGamesById(int userId){
+        String data = serverConnection.get("games/open/" + userId);
+        return new Gson().fromJson(data, new TypeToken<ArrayList<Game>>(){}.getType());
     }
 
     // method that enables a player to join a game, which is detemined by a gameid,
     // and furthermore depends on the opposing user and said users controls
 
-    public static void joinGame(int gameId, Gamer opponent, String controls){
-        ServerConnection sc = new ServerConnection();
+    public String joinGame(Game joinGame){
 
-        Game game = new Game();
-        game.setGameId(gameId);
-        game.setOpponent(opponent);
-        game.getOpponent().setControls(controls);
+        //Game game = new Game();
+        //game.setGameId(gameId);
+        //game.setOpponent(opponent);
+        //game.getOpponent().setControls(controls);
 
-        String json = new Gson().toJson(game);
+       // String json = new Gson().toJson(game);
 
-        sc.post(json, "api/games/join/");
+        String data = serverConnection.put(new Gson().toJson(joinGame), "games/join/");
 
+        HashMap<String, String> hashMap = new Gson().fromJson(data, HashMap.class);
+
+        return hashMap.get("message");
     }
 
     // method which effectively runs/starts a game detemined by a gameid,
     // and runs the controls of both users
 
-    public static void startGame(int gameId){
-        ServerConnection sc = new ServerConnection();
+    public String startGame(Game sGame){
 
-        Game game = new Game();
-        game.setGameId(gameId);
+        String data = serverConnection.put(new Gson().toJson(sGame), "games/start/");
 
-        String json = new Gson().toJson(game);
+        HashMap<String, String> hashMap = new Gson().fromJson(data, HashMap.class);
 
-        sc.post(json, "api/games/start/");
+        if (hashMap.get("message") != null)
+            return hashMap.get("message");
+        else {
+            Game gm = new Gson().fromJson(data, Game.class);
+            sGame.setWinner(gm.getWinner());
+            System.out.println(gm.getName());
+            return sGame.getWinner().getId()+ "";
+        }
     }
 
     // method that creates a game
@@ -143,7 +133,9 @@ public class SdkLogic {
     }
 
     public String deleteGame(int gameId){
-        String data = serverConnection.delete("/games/" + gameId);
-        return data;
+        String data = serverConnection.delete("games/" + gameId);
+        HashMap<String, String> hashMap = new Gson().fromJson(data, HashMap.class);
+
+        return hashMap.get("message");
     }
 }

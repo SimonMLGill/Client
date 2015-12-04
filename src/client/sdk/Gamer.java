@@ -54,5 +54,7 @@ public class Gamer extends User {
     public String getControls(){
         return controls;
     }
+
+
 }
 

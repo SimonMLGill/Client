@@ -1,8 +1,13 @@
 package client.gui;
 
+import client.sdk.Game;
+import client.sdk.Score;
+import client.sdk.TableModelScores;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 public class Highscores extends JPanel {
@@ -16,6 +21,7 @@ public class Highscores extends JPanel {
 	private JButton logOutBtn;
 	private JButton menuBtn;
 	private JScrollPane scrollPane;
+	private TableModelScores model;
 
 	/**
 	 * Create the panel.
@@ -33,18 +39,16 @@ public class Highscores extends JPanel {
 		snakeLbl.setBounds(30, 11, 209, 81);
 		add(snakeLbl);
 
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(40, 103, 357, 164);
-		scrollPane.setVisible(true);
-		add(scrollPane);
-
 		highscoresTbl = new JTable();
 		highscoresTbl.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		highscoresTbl.setAutoCreateRowSorter(true);
-		scrollPane.setViewportView(highscoresTbl);
 		highscoresTbl.setFont(new Font("Gill Sans MT", Font.PLAIN, 11));
 		highscoresTbl.setVisible(true);
-		add(highscoresTbl);
+
+		scrollPane = new JScrollPane(highscoresTbl);
+		scrollPane.setBounds(40, 103, 357, 164);
+		scrollPane.setVisible(true);
+		add(scrollPane);
 		
 		loggedInAsLbl = new JLabel("Logged in as:");
 		loggedInAsLbl.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
@@ -90,7 +94,13 @@ public class Highscores extends JPanel {
 	public void setUserField(String user){
 		userField.setText(user);
 	}
+
 	public JTable getHighscoresTbl(){
 		return highscoresTbl;
+	}
+
+	public void setHighscoresTbl(ArrayList<Score> scores){
+		model = new TableModelScores(scores);
+		highscoresTbl.setModel(model);
 	}
 }
