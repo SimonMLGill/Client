@@ -53,7 +53,6 @@ public class Logic {
 		snakeScreen.getNewGame().addActionListener(new NewGameActionListener());
 		snakeScreen.getHighscores().addActionListener(new HighscoresActionListener());
 		snakeScreen.getAbout().addActionListener(new AboutActionListener());
-		snakeScreen.music();
 		snakeScreen.show(snakeScreen.Login);
 
 		//serverConnection.get("api/");
@@ -64,6 +63,38 @@ public class Logic {
 	}
 
 	// trolling/Rick Roll method - because i can
+	public void music() {
+		try {
+
+			// Open an audio input stream.
+			URL url = this.getClass().getClassLoader().getResource("client/Audio/rickastley.wav");
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+			// Get a sound clip resource.
+			Clip clip = AudioSystem.getClip();
+			// Open audio clip and load samples from the audio input stream.
+			clip.open(audioIn);
+			clip.start();
+			// start()
+// Loop()
+			clip.loop(Clip.LOOP_CONTINUOUSLY);  // repeat forever
+
+			ImageIcon icon = new ImageIcon(this.getClass().getResource("200.gif"));
+			Object obj = JOptionPane.showOptionDialog(snakeScreen, "", "You Just Got RickRoll'd M8 - Get Rekt", JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE, icon, null, null);
+			if (obj == JOptionPane.YES_OPTION){
+				clip.stop();
+			} else if(obj == JOptionPane.NO_OPTION){
+				clip.stop();
+			} else if(obj == JOptionPane.CLOSED_OPTION){
+				clip.stop();
+			}
+		} catch (UnsupportedAudioFileException e) {
+			//e.printStackTrace();
+		} catch (IOException e) {
+			//e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			//e.printStackTrace();
+		}
+	}
 
 	// actionlistener for the Login JPanel, which ensures that
 	// the user can login and accordingly be rejected if inputs are incorrect
@@ -72,45 +103,45 @@ public class Logic {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-					if (e.getSource() == snakeScreen.getLogin().getLoginBtn()) {
-						try{
-						currentUser.setUsername(snakeScreen.getLogin().getUsernameField());
-						currentUser.setPassword(snakeScreen.getLogin().getPasswordField());
-						String message = sdkLogic.login(currentUser);
-						if (message.equals("Login successful")) {
-							users = sdkLogic.getUsers();
-							for (User usr: users){
+			if (e.getSource() == snakeScreen.getLogin().getLoginBtn()) {
+				try{
+					currentUser.setUsername(snakeScreen.getLogin().getUsernameField());
+					currentUser.setPassword(snakeScreen.getLogin().getPasswordField());
+					String message = sdkLogic.login(currentUser);
+					if (message.equals("Login successful")) {
+						users = sdkLogic.getUsers();
+						for (User usr: users){
 
-								if(usr.getUsername().equals(snakeScreen.getLogin().getUsernameField())){
-									currentUser = usr;
-										System.out.println(currentUser.getUsername());
-									System.out.println(currentUser.getId());
-								}
+							if(usr.getUsername().equals(snakeScreen.getLogin().getUsernameField())){
+								currentUser = usr;
+								System.out.println(currentUser.getUsername());
+								System.out.println(currentUser.getId());
 							}
-
-							snakeScreen.getMenu().setUserField(snakeScreen.getLogin().getUsernameField());
-							snakeScreen.getNewGame().setUserField(snakeScreen.getLogin().getUsernameField());
-							snakeScreen.getHighscores().setUserField(snakeScreen.getLogin().getUsernameField());
-							snakeScreen.getAbout().setUserField(snakeScreen.getLogin().getUsernameField());
-							snakeScreen.getLogin().clearFields();
-							games = sdkLogic.openGames();
-							snakeScreen.getNewGame().setAvailableGamesTbl(games);
-							scores = sdkLogic.getHighscores();
-							snakeScreen.getHighscores().setHighscoresTbl(scores);
-							snakeScreen.getNewGame().getMoveBtn().setVisible(false);
-							snakeScreen.getNewGame().getJoinGameRdbtn().setSelected(true);
-							gamesByUser = sdkLogic.getGamesById(currentUser.getId());
-							snakeScreen.getNewGame().setGamesInUsersGames(gamesByUser);
-							snakeScreen.show(snakeScreen.Menu);
-						} else
-							JOptionPane.showMessageDialog(snakeScreen, "An error has occurred, please retype" +
-									"\n username and/or password.", "Error", JOptionPane.ERROR_MESSAGE);
-
-					}catch (NullPointerException n){
-							n.printStackTrace();
 						}
 
+						snakeScreen.getMenu().setUserField(snakeScreen.getLogin().getUsernameField());
+						snakeScreen.getNewGame().setUserField(snakeScreen.getLogin().getUsernameField());
+						snakeScreen.getHighscores().setUserField(snakeScreen.getLogin().getUsernameField());
+						snakeScreen.getAbout().setUserField(snakeScreen.getLogin().getUsernameField());
+						snakeScreen.getLogin().clearFields();
+						games = sdkLogic.openGames();
+						snakeScreen.getNewGame().setAvailableGamesTbl(games);
+						scores = sdkLogic.getHighscores();
+						snakeScreen.getHighscores().setHighscoresTbl(scores);
+						snakeScreen.getNewGame().getMoveBtn().setVisible(false);
+						snakeScreen.getNewGame().getJoinGameRdbtn().setSelected(true);
+						gamesByUser = sdkLogic.getGamesById(currentUser.getId());
+						snakeScreen.getNewGame().setGamesInUsersGames(gamesByUser);
+						snakeScreen.show(snakeScreen.Menu);
+					} else
+						JOptionPane.showMessageDialog(snakeScreen, "An error has occurred, please retype" +
+								"\n username and/or password.", "Error", JOptionPane.ERROR_MESSAGE);
+
+				}catch (NullPointerException n){
+					n.printStackTrace();
 				}
+
+			}
 		}
 	}
 
@@ -170,50 +201,57 @@ public class Logic {
 				snakeScreen.getNewGame().setMoveField("");
 
 			}else if(e.getSource() == snakeScreen.getNewGame().getRunGameBtn()){
-				try{
-				Game joinGame = new Game();
-				String gameId = snakeScreen.getNewGame().getAvailableGamesTbl().
-						getValueAt(snakeScreen.getNewGame().getAvailableGamesTbl().getSelectedRow(), 0).toString();
-				int id = Integer.parseInt(gameId);
 
-				joinGame.setGameId(id);
-				joinGame.getGameId();
-				Gamer opponent = new Gamer();
-				opponent.setId(currentUser.getId());
-				opponent.setControls(snakeScreen.getNewGame().getMoveField());
-				joinGame.setOpponent(opponent);
-				if(joinGame.getOpponent().getId() != joinGame.getHost().getId()){
+					Game joinGame = new Game();
+					String gameId = snakeScreen.getNewGame().getAvailableGamesTbl().
+							getValueAt(snakeScreen.getNewGame().getAvailableGamesTbl().getSelectedRow(), 0).toString();
+					int id = Integer.parseInt(gameId);
 
+					joinGame.setGameId(id);
+					joinGame.getGameId();
+				for(Game g: games){
+					if(g.getGameId() == joinGame.getGameId()){
+						joinGame = g;
+					}
+
+				}
+					Gamer opponent = new Gamer();
+					opponent.setId(currentUser.getId());
+					opponent.setControls(snakeScreen.getNewGame().getMoveField());
+					joinGame.setOpponent(opponent);
+
+				System.out.println(joinGame.getHost().getId());
+				System.out.println(joinGame.getOpponent().getId());
+				if (currentUser.getId() != joinGame.getHost().getId()) {
 					String jGame = sdkLogic.joinGame(joinGame);
 					System.out.println(jGame);
+
 
 					String sGame = sdkLogic.startGame(joinGame);
 					System.out.println(sGame);
 
-					String winner;
 
-					for (User usr: users){
-						try{
-							if (usr.getId() == Integer.parseInt(sGame)){
-								winner = usr.getUsername();
-								JOptionPane.showMessageDialog(snakeScreen, jGame + " - the winner was: " + winner);
-							}
+						String winner = "";
+
+						for (User usr : users) {
+							try {
+								if (usr.getId() == Integer.parseInt(sGame)) {
+									winner = usr.getUsername();
+									JOptionPane.showMessageDialog(snakeScreen, jGame + " - the winner was: " + winner);
+								}
 						/*else{
 							JOptionPane.showMessageDialog(snakeScreen, "The game was a draw.");
 						}*/
+							} catch (NumberFormatException n) {
+								n.printStackTrace();
 
-						else {
-					JOptionPane.showMessageDialog(snakeScreen, "Error", "This game does not allow schizophrenia - " +
-							"\nYou Are not allowed to be your own opponent", JOptionPane.CANCEL_OPTION);
-				} }catch(NumberFormatException n){
-						n.printStackTrace();
+							}
+						}
+					} else {
+						JOptionPane.showMessageDialog(snakeScreen, "This game does not allow schizophrenia - " +
+								"\nYou Are not allowed to be your own opponent", "Error" , JOptionPane.CANCEL_OPTION);
 					}
-				}
-				}
-				}catch (NullPointerException n){
-					//JOptionPane.showMessageDialog(snakeScreen, "This game does not allow schizophrenia -" +
-					//		"\nYou are not allowed to be your own opponent", "ERROR", JOptionPane.CANCEL_OPTION);
-				}
+
 
 
 				/*
@@ -222,16 +260,16 @@ public class Logic {
 			}else if(e.getSource() == snakeScreen.getNewGame().getDeleteGameBtn()){
 				Game deleteGame = new Game();
 				for (Game game: gamesByUser){
-						if(game.getName().equals(snakeScreen.getNewGame().getSelectedGame())){
-							deleteGame = game;
-						}
+					if(game.getName().equals(snakeScreen.getNewGame().getSelectedGame())){
+						deleteGame = game;
 					}
+				}
 
-					String message = sdkLogic.deleteGame(deleteGame.getGameId());
-					System.out.println(message);
-					if(message.equals("Game was deleted")){
-						snakeScreen.getNewGame().removeGame();
-					}
+				String message = sdkLogic.deleteGame(deleteGame.getGameId());
+				System.out.println(message);
+				if(message.equals("Game was deleted")){
+					snakeScreen.getNewGame().removeGame();
+				}
 			}else if(e.getSource() == snakeScreen.getNewGame().getMenuBtn()){
 				snakeScreen.getNewGame().setMoveField("");
 				snakeScreen.show(snakeScreen.Menu);
@@ -268,7 +306,7 @@ public class Logic {
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if (e.getSource() == snakeScreen.getAbout().getMoreInfoBtn()){
-				snakeScreen.music();
+				music();
 			}else if(e.getSource() == snakeScreen.getAbout().getLogOutBtn()){
 				snakeScreen.show(snakeScreen.Login);
 			}else if(e.getSource() == snakeScreen.getAbout().getMenuBtn()){
