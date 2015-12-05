@@ -6,7 +6,9 @@ import java.util.Date;
  */
 public class Game {
 
-    // variables that define a game
+    /**
+     * creating variables that define a game
+     */
 
     private int gameId;
     private Gamer winner;
@@ -18,6 +20,11 @@ public class Game {
     private int mapSize;
 
     public Game(){}
+
+    /**
+     * get and set methods so the variables can be accessed and used by other classes
+     * @return
+     */
 
     public java.sql.Date getCreated() {
         return created;

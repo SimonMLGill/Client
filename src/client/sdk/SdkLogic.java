@@ -17,7 +17,11 @@ public class SdkLogic {
 
     ServerConnection serverConnection = new ServerConnection();
 
-    // login method using a user-object and returns a message of whether or not the said users login is successful.
+    /**
+     * login method using a user-object and returns a message of whether or not the said users login is successful.
+     * @param user the user object that is to be logged in
+     * @return
+     */
 
     public String login(User user){
 
@@ -44,15 +48,21 @@ public class SdkLogic {
         return "";
     }
 
-    // tablemodel-method which returns the highscores of the games
+    /**
+     * tablemodel-method which returns the highscores of the games
+     * @return
+     */
 
-    public ArrayList<Score> getHighscores(){
+    public ArrayList<Score> getHighscores() {
 
         String data = serverConnection.get("highscores/");
         return new Gson().fromJson(data, new TypeToken<ArrayList<Score>>(){}. getType());
     }
 
-    // tablemodel-method which returns the available/open games
+    /**
+     * tablemodel-method which returns the available/open games
+     * @return
+     */
 
     public ArrayList<Game> openGames() {
 
@@ -62,28 +72,35 @@ public class SdkLogic {
         return new Gson().fromJson(data, new TypeToken<ArrayList<Game>>(){}.getType());
     }
 
+    /**
+     * method that returns a ArrayList og user objects
+     * @return
+     */
+
     public ArrayList<User> getUsers(){
         String data = serverConnection.get("users/");
 
         return new Gson().fromJson(data, new TypeToken<ArrayList<User>>(){}.getType());
     }
 
-    // method that gets a user via a userid
+    /**
+     * method that gets open games via a userid
+     * @param userId the id of the user
+     * @return
+     */
 
-    /*public User getUser(User user){
-
-        User usr = new User();
-        usr.setUserId(user.getUserId());
-        String data = serverConnection.get("users/" + usr.getUserId());
-        return new Gson().fromJson(data, User.class);
-    }*/
     public ArrayList<Game> getGamesById(int userId){
         String data = serverConnection.get("games/open/" + userId);
-        return new Gson().fromJson(data, new TypeToken<ArrayList<Game>>(){}.getType());
+        return new Gson().fromJson(data, new TypeToken<ArrayList<Game>>() {
+        }.getType());
     }
 
-    // method that enables a player to join a game, which is detemined by a gameid,
-    // and furthermore depends on the opposing user and said users controls
+    /**
+     * method that enables a player to join a game, which is detemined by a gameid,
+     * and furthermore depends on the opposing user and said users controls
+     * @param joinGame the game that is joined
+     * @return
+     */
 
     public String joinGame(Game joinGame){
 
@@ -101,8 +118,12 @@ public class SdkLogic {
         return hashMap.get("message");
     }
 
-    // method which effectively runs/starts a game detemined by a gameid,
-    // and runs the controls of both users
+    /**
+     * method which effectively runs/starts a game detemined by a gameid,
+     * and runs the controls of both users
+     * @param sGame the game to be started
+     * @return
+     */
 
     public String startGame(Game sGame){
 
@@ -120,7 +141,11 @@ public class SdkLogic {
         }
     }
 
-    // method that creates a game
+    /**
+     * method that creates a game
+     * @param game the game object that is created
+     * @return
+     */
 
     public String createGame(Game game){
 
@@ -131,6 +156,12 @@ public class SdkLogic {
         return hashMap.get("message");
 
     }
+
+    /**
+     * method that deletes a game
+     * @param gameId the game id for the game to be deleted
+     * @return
+     */
 
     public String deleteGame(int gameId){
         String data = serverConnection.delete("games/" + gameId);

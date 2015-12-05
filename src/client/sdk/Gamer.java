@@ -5,7 +5,9 @@ package client.sdk;
  */
 public class Gamer extends User {
 
-    // variables defining a gamer
+    /**
+     * creating variables that define a Game
+     */
 
     private int endScore;
     private int score;
@@ -13,7 +15,10 @@ public class Gamer extends User {
     private String controls;
     private boolean champion;
 
-    // setters and getters and booleans to the aforementioned variables
+    /**
+     * creating get and set for the variables so the other classes can access and use the said variables
+     * @return
+     */
 
     public boolean isChampion(boolean champion){
         return champion;

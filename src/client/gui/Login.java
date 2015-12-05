@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 
 public class Login extends JPanel {
 
-	// variables/components of this JPanel
+	/**
+	 * variables/components of this JPanel
+	 */
 
 	private JTextField usernameField;
 	private JPasswordField passwordField;
@@ -18,10 +20,8 @@ public class Login extends JPanel {
 	private JButton loginBtn;
 	
 	/**
-	 * Create the panel.
+	 * Create the panel, and components
 	 */
-
-	// components of the JPanel
 
 	public Login() {
 		setBackground(new Color(255, 255, 224));
@@ -66,20 +66,27 @@ public class Login extends JPanel {
 
 	}
 
-	// adding actionlisteners to the JButton
-	
+	/**
+	 * adding actionlisteners to the JButton
+	 * @param l the actionlistener that is added to the button
+	 */
 	public void addActionListener (ActionListener l){
 		loginBtn.addActionListener(l);
 	}
 
-	// method that clears the JTextfields
+	/**
+	 * method that clears the JTextfields
+	 */
 
 	public void clearFields(){
 		usernameField.setText("");
 		passwordField.setText("");
 	}
 
-	// getters and setters to some components
+	/**
+	 * getters and setters to some components
+	 * @return
+	 */
 	
 	public JButton getLoginBtn(){
 		return loginBtn;

@@ -4,15 +4,25 @@ package client.sdk;
  * Created by Simon DonGill on 04-12-2015.
  */
 public class Score {
-    // Declare highScore
+
+    /**
+     * creating variables that define a score
+     */
+
     private int id;
     private Gamer user;
     private Gamer opponent;
     private Game game;
     private int score;
 
-    //TODO: Kan slettes?! Bruges ikke i wrapper længere.
-    // Creates constructor
+    /**
+     * Creates constructor of the score
+     * @param id of the game
+     * @param user the user of the score
+     * @param game the game the scores was set in
+     * @param opponent the opponent the score was set against
+     * @param score the score
+     */
     public Score(int id, Gamer user, Game game, Gamer opponent, int score)
     {
         this.id = id;
@@ -24,7 +34,10 @@ public class Score {
 
     public Score(){}
 
-    // Creates get method which returns the highScore
+    /**
+     * Creates get and set method so the variables can be accessed and used by other classes
+     * @return
+     */
 
     public Gamer getOpponent() { return opponent; }
 

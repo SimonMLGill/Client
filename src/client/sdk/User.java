@@ -7,7 +7,9 @@ import java.sql.Date;
  */
 public class User {
 
-    //creating variables
+    /**
+     * creating variables that define a user
+     */
     private int id;
     private String firstName;
     private String lastName;
@@ -18,7 +20,11 @@ public class User {
     private String email;
     private int type;
     public User(){}
-    //creating get and set method for all the variables, so they can be used by other classes
+
+    /**
+     * creating get and set method for all the variables, so they can be used and accessed by other classes
+     * @return
+     */
 
     public int getId() {
         return id;

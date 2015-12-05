@@ -1,6 +1,6 @@
 package client.gui;
 
-import client.sdk.Game;
+
 import client.sdk.Score;
 import client.sdk.TableModelScores;
 
@@ -12,7 +12,9 @@ import java.util.ArrayList;
 
 public class Highscores extends JPanel {
 
-	// variables/components of this JPanel
+	/**
+	 * variables/components of this JPanel
+	 */
 
 	private JTable highscoresTbl;
 	private JTextField userField;
@@ -24,10 +26,8 @@ public class Highscores extends JPanel {
 	private TableModelScores model;
 
 	/**
-	 * Create the panel.
+	 * Create the panel and components
 	 */
-
-	// components of the JPanel
 
 	public Highscores() {
 		setBackground(new Color(255, 255, 224));
@@ -74,15 +74,20 @@ public class Highscores extends JPanel {
 
 	}
 
-	// adding actionlisteners to the JButtons
+	/**
+	 * adding actionlisteners to the JButtons
+	 * @param h the actionlistener that is added to the buttons
+	 */
 
 	public void addActionListener(ActionListener h){
 		logOutBtn.addActionListener(h);
 		menuBtn.addActionListener(h);
 	}
 
-	// getters and setters to some components
-
+	/**
+	 * getters and setters to some components
+	 * @return
+	 */
 	public JButton getLogOutBtn(){
 		return logOutBtn;
 	}

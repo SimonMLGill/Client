@@ -18,8 +18,10 @@ import java.util.ArrayList;
 
 public class Logic {
 
-	// logic/controller class that connects the backend with the frontend
-	// creating variables of the screen-, backendlogic-, connector to server- and user class
+	/**
+	 * logic/controller class that connects the backend with the frontend
+	 * creating variables of the screen-, backendlogic-, connector to server- and user class
+	 */
 
 	private SnakeScreen snakeScreen;
 	private SdkLogic sdkLogic;
@@ -30,7 +32,10 @@ public class Logic {
 	private ArrayList<Game> gamesByUser;
 	private ArrayList<User > users;
 	private ArrayList<Score> scores;
-	// creating objects of the aforementioned classes
+
+	/**
+	 * creating objects of the aforementioned classes
+	 */
 
 	public Logic(){
 		snakeScreen = new SnakeScreen();
@@ -43,8 +48,10 @@ public class Logic {
 
 	}
 
-	// run method that adds the actionlistener classes for each of the JPanels
-	// and effectively runs the frontend
+	/**
+	 *  run method that adds the actionlistener classes for each of the JPanels
+	 * and effectively runs the frontend
+	 */
 
 	public void run(){
 
@@ -55,28 +62,26 @@ public class Logic {
 		snakeScreen.getAbout().addActionListener(new AboutActionListener());
 		snakeScreen.show(snakeScreen.Login);
 
-		//serverConnection.get("api/");
-		//serverConnection.get("api/games/open/");
-		//System.out.println(sdkLogic.getHighscores());
-		//System.out.println(sdkLogic.openGames());
-
 	}
 
-	// trolling/Rick Roll method - because i can
-	public void music() {
+	/**
+	 *  trolling/Rick Roll method - because i can
+	 *  plays music via the url of the file to be played and loops the music indefinitely
+	 *  whereafter it sets the imageicon of the JOptionpane to be a gif via a url
+	 *  and opens the JOptionpane, and stops the music when clicking off the JOptionpane
+	 */
+	public void RickRollAndMusic() {
 		try {
 
-			// Open an audio input stream.
+
 			URL url = this.getClass().getClassLoader().getResource("client/Audio/rickastley.wav");
 			AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
-			// Get a sound clip resource.
+
 			Clip clip = AudioSystem.getClip();
-			// Open audio clip and load samples from the audio input stream.
+
 			clip.open(audioIn);
 			clip.start();
-			// start()
-// Loop()
-			clip.loop(Clip.LOOP_CONTINUOUSLY);  // repeat forever
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
 
 			ImageIcon icon = new ImageIcon(this.getClass().getResource("200.gif"));
 			Object obj = JOptionPane.showOptionDialog(snakeScreen, "", "You Just Got RickRoll'd M8 - Get Rekt", JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE, icon, null, null);
@@ -96,10 +101,16 @@ public class Logic {
 		}
 	}
 
-	// actionlistener for the Login JPanel, which ensures that
-	// the user can login and accordingly be rejected if inputs are incorrect
+	/**
+	 * Actionlistener for the Login JPanel, which ensures that
+	 * the user can login and accordingly be rejected if inputs are incorrect
+	 */
 
 	public class LoginActionListener implements ActionListener {
+		/**
+		 *
+		 * @param e the ActionEvent that triggers what actions to be performed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
@@ -145,10 +156,15 @@ public class Logic {
 		}
 	}
 
-	// actionlistener for the menu JPanel ensuring the JButtons work
-	// accordingly
-
+	/**
+	 * actionlistener for the menu JPanel ensuring the JButtons work
+	 * accordingly
+	 */
 	public class MenuActionListener implements ActionListener {
+		/**
+		 *
+		 * @param e the ActionEvent that triggers what actions to be performed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if(e.getSource() == snakeScreen.getMenu().getNewGameBtn()){
@@ -163,11 +179,17 @@ public class Logic {
 		}
 	}
 
-	// acitonlistener for the newgame JPanel that enables the user
-	// to create a game, join a game, and see the available/open games
-	// on the server
+	/**
+	 * acitonlistener for the newgame JPanel that enables the user
+	 * to create a game, join a game, start a game, delete a game, and see the available/open games
+	 * on the server
+	 */
 
 	public class NewGameActionListener implements ActionListener {
+		/**
+		 *
+		 * @param e the ActionEvent that triggers what actions to be performed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if(e.getSource() == snakeScreen.getNewGame().getCreateGameRdbtn()){
@@ -226,12 +248,10 @@ public class Logic {
 					String jGame = sdkLogic.joinGame(joinGame);
 					System.out.println(jGame);
 
-
 					String sGame = sdkLogic.startGame(joinGame);
 					System.out.println(sGame);
 
-
-						String winner = "";
+						String winner;
 
 						for (User usr : users) {
 							try {
@@ -239,9 +259,7 @@ public class Logic {
 									winner = usr.getUsername();
 									JOptionPane.showMessageDialog(snakeScreen, jGame + " - the winner was: " + winner);
 								}
-						/*else{
-							JOptionPane.showMessageDialog(snakeScreen, "The game was a draw.");
-						}*/
+
 							} catch (NumberFormatException n) {
 								n.printStackTrace();
 
@@ -251,12 +269,6 @@ public class Logic {
 						JOptionPane.showMessageDialog(snakeScreen, "This game does not allow schizophrenia - " +
 								"\nYou Are not allowed to be your own opponent", "Error" , JOptionPane.CANCEL_OPTION);
 					}
-
-
-
-				/*
-				*HUSK AT TJEKKE OM HOST OG OPPONENT ER SAMME PERSON.
-				*/
 			}else if(e.getSource() == snakeScreen.getNewGame().getDeleteGameBtn()){
 				Game deleteGame = new Game();
 				for (Game game: gamesByUser){
@@ -284,10 +296,16 @@ public class Logic {
 		}
 	}
 
-	// actionlistener to the highscores JPanel that shows the highscores
-	// on the server
+	/**
+	 * actionlistener to the highscores JPanel that shows the highscores
+	 * on the server
+	 */
 
 	public class HighscoresActionListener implements ActionListener {
+		/**
+		 *
+		 * @param e the ActionEvent that triggers what actions to be performed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e){
 			//snakeScreen.getHighscores().getHighscoresTbl().setModel(sdkLogic.getHighscores());
@@ -299,14 +317,32 @@ public class Logic {
 		}
 	}
 
-	// actionlistener the the about JPanel that solidifies the RickRoll method
-	// and furthermore delivers general information to the user
+	/**
+	 *  actionlistener the the about JPanel that solidifies the RickRoll method
+	 * and furthermore delivers general information to the user
+	 */
 
 	public class AboutActionListener implements ActionListener {
+		/**
+		 *
+		 * @param e the ActionEvent that triggers what actions to be performed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if (e.getSource() == snakeScreen.getAbout().getMoreInfoBtn()){
-				music();
+				RickRollAndMusic();
+			}else if (e.getSource() == snakeScreen.getAbout().getCreateGameBtn()){
+				JOptionPane.showMessageDialog(snakeScreen, "The game works as follows: \nYou create a game by tabbing the " +
+						"*Create Game* button,\n" +	"inserting your controls in the textfield via the W-A-S-D keys and click the\n " +
+						"*Commit* button, set the game name in the popup, and the game is created", "How to create a game", JOptionPane.OK_OPTION);
+			}else if (e.getSource() == snakeScreen.getAbout().getJoinGameBtn()){
+				JOptionPane.showMessageDialog(snakeScreen, "You tab the *Join Game* button, and choose a game from the table.\n" +
+						"You then insert your controls in the textfield via the W-A-S-D keys\n" + "and then you click the *Run Game* " +
+						"button.\n" + "If the desired game cannot be found, try logging off\n" +"and then on again.",
+						"How to join and run a game", JOptionPane.OK_OPTION);
+			}else if (e.getSource() == snakeScreen.getAbout().getDeleteGameBtn()){
+				JOptionPane.showMessageDialog(snakeScreen, "You select a game from the dropdown, and click\n" +
+						"the *Delete* button", "How to delete a game", JOptionPane.OK_OPTION);
 			}else if(e.getSource() == snakeScreen.getAbout().getLogOutBtn()){
 				snakeScreen.show(snakeScreen.Login);
 			}else if(e.getSource() == snakeScreen.getAbout().getMenuBtn()){

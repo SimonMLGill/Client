@@ -11,7 +11,9 @@ import java.util.ArrayList;
 
 public class NewGame extends JPanel {
 
-	// variables/components that populate this JPanel
+	/**
+	 * variables/components that populate this JPanel
+	 */
 
 	private JTextField moveField;
 	private JTable availableGamesTbl;
@@ -33,10 +35,9 @@ public class NewGame extends JPanel {
 
 
 	/**
-	 * Create the panel.
+	 * Create the panel, and the components
 	 */
 
-	// components to the JPanel
 	public NewGame() {
 		setBackground(new Color(255, 255, 224));
 		setLayout(null);
@@ -131,7 +132,10 @@ public class NewGame extends JPanel {
 
 	}
 
-	// adding actionlisteners the JButtons and JRadioButtons
+	/**
+	 * adding actionlisteners the JButtons and JRadioButtons
+	 * @param n the actionlistener that is added to the buttons
+	 */
 	
 	public void addActionListener(ActionListener n){
 		moveBtn.addActionListener(n);
@@ -143,7 +147,10 @@ public class NewGame extends JPanel {
 		deleteGameBtn.addActionListener(n);
 	}
 
-	// setters and getters to some of the components
+	/**
+	 * setters and getters to some of the components
+	 * @return
+	 */
 
 	public JButton getMoveBtn(){
 		return moveBtn;

@@ -11,19 +11,26 @@ import com.sun.jersey.api.client.WebResource;
  */
 public class ServerConnection {
 
-    // constructor to this class
+    /**
+     * constructor to this class
+     */
 
     public ServerConnection(){
         this.hostAddress = "http://localhost";
         this.port = 8999;
     }
 
-    // variables for host adress and port for server
+    /**
+     * variables for host adress and port for server
+     */
 
     private String hostAddress;
     private int port;
 
-    // setters and getters for the aforementioned variables
+    /**
+     * setters and getters for the aforementioned variables
+     * @param hostAddress the hosting address in use
+     */
 
     public void setHostAddress(String hostAddress) {
         this.hostAddress = hostAddress;
@@ -41,7 +48,11 @@ public class ServerConnection {
         return port;
     }
 
-    // method for GET-ting from the restful webservice
+    /**
+     * method for GET-ting from the restful webservice
+     * @param path the path from which content is gotten
+     * @return
+     */
 
     public String get(String path){
 
@@ -60,7 +71,12 @@ public class ServerConnection {
         return message;
     }
 
-    // method for POST-ing to the restful webservice
+    /**
+     * method for POST-ing to the restful webservice
+     * @param json the json-formatted string that is posted
+     * @param path the path to which the json string is posted
+     * @return
+     */
 
     public String post(String json, String path){
         String message = "";
@@ -77,6 +93,12 @@ public class ServerConnection {
         return message;
     }
 
+    /**
+     * method for deleting from the restful webservice
+     * @param path the path from which content is deleted
+     * @return
+     */
+
     public String delete(String path){
         String message = "";
         Client client = Client.create();
@@ -92,6 +114,13 @@ public class ServerConnection {
 
     }
 
+
+    /**
+     * method for PUT-ting to the restful webservice
+     * @param json the json-formatted string that is put
+     * @param path the path to which content is put
+     * @return
+     */
     public String put(String json, String path){
 
         String message = "";

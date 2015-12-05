@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 
 public class Menu extends JPanel {
 
-	// variables/components of this JPanel
+	/**
+	 * variables/components of this JPanel
+	 */
 
 	private JTextField userField;
 	private JButton newGameBtn;
@@ -18,10 +20,8 @@ public class Menu extends JPanel {
 	private JButton logOutBtn;
 	
 	/**
-	 * Create the panel.
+	 * Create the panel, and the components
 	 */
-
-	// components of the JPanel
 
 	public Menu() {
 		setBackground(new Color(255, 255, 224));
@@ -67,7 +67,10 @@ public class Menu extends JPanel {
 
 	}
 
-	// adding actionlisteners to the JButtons
+	/**
+	 * adding actionlisteners to the JButtons
+	 * @param m the actionlistener that is added to the buttons
+	 */
 
 	public void addActionListener(ActionListener m){
 		newGameBtn.addActionListener(m);
@@ -76,7 +79,10 @@ public class Menu extends JPanel {
 		logOutBtn.addActionListener(m);
 	}
 
-	// getters and setters to some of the components
+	/**
+	 * getters and setters to some of the components
+	 * @return
+	 */
 
 	public JButton getNewGameBtn(){
 		return newGameBtn;

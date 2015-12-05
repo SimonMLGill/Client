@@ -7,21 +7,24 @@ import java.awt.event.ActionListener;
 
 public class About extends JPanel {
 
-	// variables/components to this JPanel
+	/**
+	 * variables/components to this JPanel
+	 */
 
 	private JTextField userField;
 	private JLabel loggedInAsLbl;
 	private JLabel snakeLbl;
 	private JButton logOutBtn;
 	private JButton menuBtn;
-	private JLabel infoLabel;
-	private JButton moreInfoBtn; 
+	private JTextArea infoArea;
+	private JButton moreInfoBtn;
+	private JButton createGameBtn;
+	private JButton joinGameBtn;
+	private JButton deleteGameBtn;
 	
 	/**
-	 * Create the panel.
+	 * Create the panel, and the components
 	 */
-
-	// components of the JPanel
 
 	public About() {
 		setBackground(new Color(255, 255, 224));
@@ -54,11 +57,22 @@ public class About extends JPanel {
 		menuBtn.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
 		menuBtn.setBounds(351, 69, 89, 23);
 		add(menuBtn);
-		
-		infoLabel = new JLabel("");
-		infoLabel.setBounds(30, 117, 222, 145);
-		add(infoLabel);
-		
+
+		createGameBtn = new JButton("Create Game");
+		createGameBtn.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
+		createGameBtn.setBounds(57, 119, 131, 23);
+		add(createGameBtn);
+
+		joinGameBtn = new JButton("Join Game");
+		joinGameBtn.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
+		joinGameBtn.setBounds(57, 167, 131, 23);
+		add(joinGameBtn);
+
+		deleteGameBtn = new JButton("Delete Game");
+		deleteGameBtn.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
+		deleteGameBtn.setBounds(57, 211, 131, 23);
+		add(deleteGameBtn);
+
 		moreInfoBtn = new JButton("More Info");
 		moreInfoBtn.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
 		moreInfoBtn.setBounds(277, 118, 112, 23);
@@ -66,15 +80,25 @@ public class About extends JPanel {
 
 	}
 
-	// adding actionlisteners to buttons
+	/**
+	 * adding actionlisteners to buttons
+	 * @param a the actionlistener that is added to the buttons
+	 */
 
 	public void addActionListener(ActionListener a){
 		logOutBtn.addActionListener(a);
 		menuBtn.addActionListener(a);
+		createGameBtn.addActionListener(a);
+		joinGameBtn.addActionListener(a);
+		deleteGameBtn.addActionListener(a);
 		moreInfoBtn.addActionListener(a);
 	}
 
-	// setters and getters to some of the components
+	/**
+	 *
+	 * setters and getters to some of the components
+	 * @return
+	 */
 
 	public JButton getLogOutBtn(){
 		return logOutBtn;
@@ -83,7 +107,19 @@ public class About extends JPanel {
 	public JButton getMenuBtn(){
 		return menuBtn;
 	}
-	
+
+	public JButton getCreateGameBtn(){
+		return createGameBtn;
+	}
+
+	public JButton getJoinGameBtn(){
+		return joinGameBtn;
+	}
+
+	public JButton getDeleteGameBtn(){
+		return deleteGameBtn;
+	}
+
 	public JButton getMoreInfoBtn(){
 		return moreInfoBtn;
 	}
