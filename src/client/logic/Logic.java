@@ -198,6 +198,7 @@ public class Logic {
 				snakeScreen.getNewGame().getCreateGameRdbtn().setSelected(true);
 				snakeScreen.getNewGame().getMoveBtn().setVisible(true);
 				snakeScreen.getNewGame().getScrollPane().setVisible(false);
+				snakeScreen.getNewGame().getRunGameBtn().setVisible(false);
 			}else if(e.getSource() == snakeScreen.getNewGame().getJoinGameRdbtn()){
 
 				snakeScreen.getNewGame().getCreateGameRdbtn().setSelected(false);

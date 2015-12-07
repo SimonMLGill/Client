@@ -19,6 +19,7 @@ public class Game {
     private java.sql.Date created;
     private int mapSize;
 
+
     public Game(){}
 
     /**
@@ -50,7 +51,6 @@ public class Game {
         this.name = name;
     }
 
-    //Creating get/set method for all the variables, so they can be used by other classes
     public int getGameId(){
         return gameId;
     }
